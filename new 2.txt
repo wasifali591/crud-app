@@ -1,0 +1,31 @@
+if (isset($_POST['registerButton'])) {
+        //receive all input values from the form
+        $username =$_POST['username'];
+        $email =$_POST['email'];
+        $newPassword = $_POST['password'];
+        $confirmPassword =$_POST['confirmpassword'];
+    
+        if ($newPassword === $confirmPassword) {
+            $sql = "INSERT INTO `user` SET `username`='".$_POST['username']."',
+                    `email`='".$_POST['email']."',
+                    `password`='".$_POST['password']."'";
+
+            //$sql="INSERT INTO `user`(`username`,`email`,`password`) VALUES('".$username."'','".$email."','".$newPassword."')";
+            //$result=mysqli_query($db,$sql);//or die(mysqli_error($db))
+            // if (mysqli_num_rows($result)) {
+            //     //session_start();
+            //     $_SESSION['username'] = $username;
+            //     header("location:index.php");
+            //     exit();
+            // }
+            $result=mysqli_query($db,$sql);
+            if (mysqli_num_rows($result) > 0) {
+                //$rowlog = mysqli_fetch_array($result);
+                $_SESSION['username'] = $username;
+                header("location:index.php");
+                exit();
+            }
+        }else{
+            echo 'password not matched';
+        } 
+    }
